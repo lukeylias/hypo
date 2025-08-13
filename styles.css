@@ -25,6 +25,67 @@ body {
     padding: 2rem 1rem;
 }
 
+.action-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.reset-btn {
+    background: #ffffff;
+    color: #ef4444;
+    border: 2px solid #ef4444;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+}
+
+.reset-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.reset-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.share-btn {
+    background: #ffffff;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+}
+
+.share-btn:hover {
+    background: #3b82f6;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.share-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
 .header {
     text-align: center;
     margin-bottom: 3rem;
@@ -53,15 +114,6 @@ body {
     gap: 2rem;
 }
 
-.progress-line {
-    position: absolute;
-    left: 1.5rem;
-    top: 3rem;
-    bottom: 3rem;
-    width: 2px;
-    background: #e5e7eb;
-    z-index: 1;
-}
 
 /* Step styling */
 .step {
@@ -230,10 +282,6 @@ textarea {
 
 select {
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5rem;
     padding-right: 2.5rem;
 }
 
@@ -549,10 +597,6 @@ select {
     .step {
         padding: 1rem;
     }
-    
-    .progress-line {
-        left: 1.25rem;
-    }
 }
 
 /* Focus and hover animations */
@@ -672,6 +716,295 @@ select {
 
 .modal-body li {
     margin-bottom: 0.5rem;
+}
+
+/* Calculator styling */
+.data-collection-section {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.data-collection-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.75rem 0;
+}
+
+.data-collection-section p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.prompt-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.prompt-box:last-child {
+    margin-bottom: 0;
+}
+
+.prompt-box label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.copyable-prompt {
+    background: #f3f4f6;
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: #111827;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+    border-left: 3px solid #3b82f6;
+}
+
+.proxy-metric-placeholder {
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.copy-prompt-btn {
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+}
+
+.copy-prompt-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.copy-prompt-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.calculator-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.input-with-suffix {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-suffix input,
+select,
+.calculator-inputs input[type="number"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 300ms ease;
+    background: #ffffff;
+}
+
+.input-with-suffix input {
+    padding-right: 3rem;
+}
+
+select {
+    padding-right: 2.5rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+}
+
+.input-with-suffix input:focus,
+select:focus,
+.calculator-inputs input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Remove increment/decrement arrows from number inputs */
+.calculator-inputs input[type="number"]::-webkit-outer-spin-button,
+.calculator-inputs input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.calculator-inputs input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input-suffix {
+    position: absolute;
+    right: 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+    pointer-events: none;
+}
+
+.variations-radio-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.variations-radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.variations-radio-option input[type="radio"] {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.variations-radio-option label {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #374151;
+    cursor: pointer;
+}
+
+.input-error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    min-height: 1.25rem;
+}
+
+.calculator-result {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.calculator-result h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c4a6e;
+    margin: 0 0 0.75rem 0;
+}
+
+.calculator-result p {
+    color: #0369a1;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.calculate-btn {
+    background: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 300ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    width: 100%;
+    justify-content: center;
+}
+
+.calculate-btn:hover:not(:disabled) {
+    background: #374151;
+    transform: translateY(-1px);
+}
+
+.calculate-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.calculate-btn:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.calculate-btn.success {
+    background: #22c55e;
+    color: #ffffff;
+}
+
+.calculate-btn.success:hover {
+    background: #16a34a;
+}
+
+/* Responsive design for calculator */
+@media (max-width: 768px) {
+    .data-collection-section {
+        padding: 1rem;
+    }
+    
+    .calculator-inputs {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .copyable-prompt {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+    
+    .copy-prompt-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
 }
 
 /* High contrast mode support */

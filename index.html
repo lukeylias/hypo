@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
     <div class="container">
@@ -17,8 +17,18 @@
         </header>
 
         <main class="main">
+            <div class="action-buttons-container">
+                <button type="button" class="share-btn" id="shareForm">
+                    <span data-lucide="share-2"></span>
+                    Share Form
+                </button>
+                <button type="button" class="reset-btn" id="resetForm">
+                    <span data-lucide="refresh-cw"></span>
+                    Reset Form
+                </button>
+            </div>
+            
             <div class="progress-container">
-                <div class="progress-line"></div>
                 
                 <!-- Step 1: Problem/Opportunity Identification -->
                 <div class="step" id="step-1" data-step="1">
@@ -42,16 +52,6 @@
                                 placeholder="e.g., ContentSquare shows 70% of users abandon our checkout page at the payment step"
                                 aria-describedby="problem-help"
                             >
-                            <div class="quick-examples">
-                                <p class="examples-label">Quick examples:</p>
-                                <div class="example-buttons">
-                                    <button type="button" class="example-btn" data-value="High cart abandonment at payment step">High cart abandonment at payment step</button>
-                                    <button type="button" class="example-btn" data-value="Low email signup conversion on landing page">Low email signup conversion on landing page</button>
-                                    <button type="button" class="example-btn" data-value="Poor mobile navigation engagement">Poor mobile navigation engagement</button>
-                                    <button type="button" class="example-btn" data-value="Low feature adoption in dashboard">Low feature adoption in dashboard</button>
-                                    <button type="button" class="example-btn" data-value="High bounce rate on product pages">High bounce rate on product pages</button>
-                                </div>
-                            </div>
                         </div>
                         <button type="button" class="next-btn" disabled>Continue to Solution</button>
                     </div>
@@ -189,32 +189,29 @@
                     </div>
                     <div class="step-content">
                         <div class="form-group">
-                            <fieldset>
-                                <legend class="sr-only">Select the impact level of your changes</legend>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        <input type="radio" id="impact-minor" name="changeImpact" value="Minor">
-                                        <label for="impact-minor">
-                                            <strong>Minor</strong>
-                                            <span class="radio-description">small visual changes, copy tweaks</span>
-                                        </label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="impact-moderate" name="changeImpact" value="Moderate">
-                                        <label for="impact-moderate">
-                                            <strong>Moderate</strong>
-                                            <span class="radio-description">layout changes, new content sections</span>
-                                        </label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="impact-major" name="changeImpact" value="Major">
-                                        <label for="impact-major">
-                                            <strong>Major</strong>
-                                            <span class="radio-description">complete redesign, new features</span>
-                                        </label>
-                                    </div>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="impact-minor" name="changeImpact" value="Minor">
+                                    <label for="impact-minor">
+                                        <strong>Minor</strong>
+                                        <span class="radio-description">small visual changes, copy tweaks</span>
+                                    </label>
                                 </div>
-                            </fieldset>
+                                <div class="radio-option">
+                                    <input type="radio" id="impact-moderate" name="changeImpact" value="Moderate">
+                                    <label for="impact-moderate">
+                                        <strong>Moderate</strong>
+                                        <span class="radio-description">layout changes, new content sections</span>
+                                    </label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="impact-major" name="changeImpact" value="Major">
+                                    <label for="impact-major">
+                                        <strong>Major</strong>
+                                        <span class="radio-description">complete redesign, new features</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <button type="button" class="next-btn" disabled>Continue to MDA Calculation</button>
                     </div>
@@ -233,17 +230,112 @@
                         </button>
                     </div>
                     <div class="step-content">
-                        <div class="form-group">
-                            <label for="mdaCalculation" class="sr-only">Enter your MDA calculation details</label>
-                            <textarea 
-                                id="mdaCalculation" 
-                                name="mdaCalculation" 
-                                rows="3" 
-                                placeholder="e.g., Need 50,000 visitors per variant over 3 weeks for 95% confidence to detect 5% lift"
-                                aria-describedby="mda-help"
-                            ></textarea>
+                        <!-- ContentSquare Data Collection Section -->
+                        <div class="data-collection-section">
+                            <h3>ContentSquare Data Collection</h3>
+                            <p>Use these prompts in ContentSquare AI Agent to gather your baseline data:</p>
+                            
+                            <div class="prompt-box">
+                                <label>Getting baseline conversion rate:</label>
+                                <div class="copyable-prompt" id="baselinePrompt">
+                                    "What's the conversion rate from <span class="proxy-metric-placeholder">[Proxy Metric]</span> to Join Complete over the last 90 days?"
+                                </div>
+                                <button type="button" class="copy-prompt-btn" data-prompt="baseline">
+                                    <span data-lucide="copy"></span>
+                                    Copy Prompt
+                                </button>
+                            </div>
+                            
+                            <div class="prompt-box">
+                                <label>Getting weekly traffic volume:</label>
+                                <div class="copyable-prompt" id="trafficPrompt">
+                                    "How many weekly sessions reach <span class="proxy-metric-placeholder">[Proxy Metric]</span> on average over the last 90 days?"
+                                </div>
+                                <button type="button" class="copy-prompt-btn" data-prompt="traffic">
+                                    <span data-lucide="copy"></span>
+                                    Copy Prompt
+                                </button>
+                            </div>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Timeline</button>
+                        
+                        <!-- Calculator Input Section -->
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label for="baselineRate">Baseline Conversion Rate</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="baselineRate" step="0.01" min="0.1" max="99" placeholder="15.90" maxlength="5">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <div class="input-error" id="baselineRate-error"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="weeklyVisitors">Weekly Visitors</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="weeklyVisitors" min="100" placeholder="1970" maxlength="6">
+                                    <span class="input-suffix">sessions</span>
+                                </div>
+                                <div class="input-error" id="weeklyVisitors-error"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mde">Minimum Detectable Effect (MDE)</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="mde" value="10" step="1" min="1" max="50" maxlength="2">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <div class="input-error" id="mde-error"></div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="significance">Statistical Significance</label>
+                                <select id="significance">
+                                    <option value="90" selected>90%</option>
+                                    <option value="95">95%</option>
+                                    <option value="99">99%</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label>Number of Variations</label>
+                                <div class="variations-radio-group">
+                                    <div class="variations-radio-option">
+                                        <input type="radio" id="variations-2" name="variations" value="2" checked>
+                                        <label for="variations-2">2</label>
+                                    </div>
+                                    <div class="variations-radio-option">
+                                        <input type="radio" id="variations-3" name="variations" value="3">
+                                        <label for="variations-3">3</label>
+                                    </div>
+                                    <div class="variations-radio-option">
+                                        <input type="radio" id="variations-4" name="variations" value="4">
+                                        <label for="variations-4">4</label>
+                                    </div>
+                                    <div class="variations-radio-option">
+                                        <input type="radio" id="variations-5" name="variations" value="5">
+                                        <label for="variations-5">5</label>
+                                    </div>
+                                    <div class="variations-radio-option">
+                                        <input type="radio" id="variations-6" name="variations" value="6">
+                                        <label for="variations-6">6</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-result" id="calculatorResult" style="display: none;">
+                            <div class="result-summary">
+                                <h4>Calculation Results</h4>
+                                <p id="resultSummary"></p>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="calculate-btn" id="calculateBtn" disabled>
+                            Calculate Timeline
+                        </button>
+                        
+                        <!-- Hidden field to maintain compatibility -->
+                        <input type="hidden" id="mdaCalculation" name="mdaCalculation">
                     </div>
                 </div>
 
@@ -361,6 +453,6 @@
     </div>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=11"></script>
 </body>
 </html>

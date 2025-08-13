@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AB Test Setup Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>AB Test Setup Guide</h1>
+            <p class="subtitle">Create effective AB test plans with our 8-step progressive form</p>
+        </header>
+
+        <main class="main">
+            <div class="progress-container">
+                <div class="progress-line"></div>
+                
+                <!-- Step 1: Problem/Opportunity Identification -->
+                <div class="step" id="step-1" data-step="1">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="target"></span>
+                            <span class="number">1</span>
+                        </div>
+                        <h2>Problem/Opportunity Identification</h2>
+                        <button class="info-btn" aria-label="Info for step 1" data-step="1">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="problem" class="sr-only">Describe the problem or opportunity</label>
+                            <input 
+                                type="text" 
+                                id="problem" 
+                                name="problem" 
+                                placeholder="e.g., ContentSquare shows 70% of users abandon our checkout page at the payment step"
+                                aria-describedby="problem-help"
+                            >
+                            <div class="quick-examples">
+                                <p class="examples-label">Quick examples:</p>
+                                <div class="example-buttons">
+                                    <button type="button" class="example-btn" data-value="High cart abandonment at payment step">High cart abandonment at payment step</button>
+                                    <button type="button" class="example-btn" data-value="Low email signup conversion on landing page">Low email signup conversion on landing page</button>
+                                    <button type="button" class="example-btn" data-value="Poor mobile navigation engagement">Poor mobile navigation engagement</button>
+                                    <button type="button" class="example-btn" data-value="Low feature adoption in dashboard">Low feature adoption in dashboard</button>
+                                    <button type="button" class="example-btn" data-value="High bounce rate on product pages">High bounce rate on product pages</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Solution</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Solution Proposal -->
+                <div class="step" id="step-2" data-step="2" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="lightbulb"></span>
+                            <span class="number">2</span>
+                        </div>
+                        <h2>Solution Proposal</h2>
+                        <button class="info-btn" aria-label="Info for step 2" data-step="2">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="solution" class="sr-only">Describe your proposed solution</label>
+                            <textarea 
+                                id="solution" 
+                                name="solution" 
+                                rows="3" 
+                                placeholder="e.g., Add trust badges and security icons above the payment form to reduce anxiety"
+                                aria-describedby="solution-help"
+                            ></textarea>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Hypothesis</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Hypothesis Formation -->
+                <div class="step" id="step-3" data-step="3" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="flask-conical"></span>
+                            <span class="number">3</span>
+                        </div>
+                        <h2>Hypothesis Formation</h2>
+                        <button class="info-btn" aria-label="Info for step 3" data-step="3">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="hypothesis" class="sr-only">Write your hypothesis</label>
+                            <textarea 
+                                id="hypothesis" 
+                                name="hypothesis" 
+                                rows="3" 
+                                placeholder="e.g., I believe adding trust badges will increase payment completion by 15% BECAUSE users will feel more confident about security"
+                                aria-describedby="hypothesis-help"
+                            ></textarea>
+                            <p class="field-description" id="hypothesis-help">I believe [solution] will [outcome] BECAUSE [reasoning]</p>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Metrics</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Long-term Metric Selection -->
+                <div class="step" id="step-4" data-step="4" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="bar-chart"></span>
+                            <span class="number">4</span>
+                        </div>
+                        <h2>Long-term Metric Selection</h2>
+                        <button class="info-btn" aria-label="Info for step 4" data-step="4">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="longTermMetric">Select your primary long-term metric</label>
+                            <select id="longTermMetric" name="longTermMetric" aria-describedby="longterm-help">
+                                <option value="">Choose a metric...</option>
+                                <option value="Join Completes">Join Completes</option>
+                                <option value="Conversion Rate">Conversion Rate</option>
+                                <option value="Revenue per Visitor">Revenue per Visitor</option>
+                                <option value="Customer Lifetime Value">Customer Lifetime Value</option>
+                                <option value="Retention Rate">Retention Rate</option>
+                                <option value="Subscription Signups">Subscription Signups</option>
+                                <option value="Purchase Completions">Purchase Completions</option>
+                                <option value="User Engagement Score">User Engagement Score</option>
+                            </select>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Proxy Metric</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Proxy Metric Identification -->
+                <div class="step" id="step-5" data-step="5" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="trending-up"></span>
+                            <span class="number">5</span>
+                        </div>
+                        <h2>Proxy Metric Identification</h2>
+                        <button class="info-btn" aria-label="Info for step 5" data-step="5">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="proxyMetric">Select your proxy metric</label>
+                            <select id="proxyMetric" name="proxyMetric" aria-describedby="proxy-help">
+                                <option value="">Choose a proxy metric...</option>
+                                <option value="Click-through Rate">Click-through Rate</option>
+                                <option value="Add to Cart Rate">Add to Cart Rate</option>
+                                <option value="Email Signups">Email Signups</option>
+                                <option value="Page Views per Session">Page Views per Session</option>
+                                <option value="Time on Page">Time on Page</option>
+                                <option value="Form Completion Rate">Form Completion Rate</option>
+                                <option value="Download Rate">Download Rate</option>
+                                <option value="Video Watch Time">Video Watch Time</option>
+                                <option value="Feature Usage Rate">Feature Usage Rate</option>
+                            </select>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Impact Assessment</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Change Impact Assessment -->
+                <div class="step" id="step-6" data-step="6" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="zap"></span>
+                            <span class="number">6</span>
+                        </div>
+                        <h2>Change Impact Assessment</h2>
+                        <button class="info-btn" aria-label="Info for step 6" data-step="6">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <fieldset>
+                                <legend class="sr-only">Select the impact level of your changes</legend>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="impact-minor" name="changeImpact" value="Minor">
+                                        <label for="impact-minor">
+                                            <strong>Minor</strong>
+                                            <span class="radio-description">small visual changes, copy tweaks</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="impact-moderate" name="changeImpact" value="Moderate">
+                                        <label for="impact-moderate">
+                                            <strong>Moderate</strong>
+                                            <span class="radio-description">layout changes, new content sections</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="impact-major" name="changeImpact" value="Major">
+                                        <label for="impact-major">
+                                            <strong>Major</strong>
+                                            <span class="radio-description">complete redesign, new features</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to MDA Calculation</button>
+                    </div>
+                </div>
+
+                <!-- Step 7: MDA Calculation -->
+                <div class="step" id="step-7" data-step="7" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="calculator"></span>
+                            <span class="number">7</span>
+                        </div>
+                        <h2>MDA Calculation</h2>
+                        <button class="info-btn" aria-label="Info for step 7" data-step="7">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="mdaCalculation" class="sr-only">Enter your MDA calculation details</label>
+                            <textarea 
+                                id="mdaCalculation" 
+                                name="mdaCalculation" 
+                                rows="3" 
+                                placeholder="e.g., Need 50,000 visitors per variant over 3 weeks for 95% confidence to detect 5% lift"
+                                aria-describedby="mda-help"
+                            ></textarea>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Continue to Timeline</button>
+                    </div>
+                </div>
+
+                <!-- Step 8: Timeline & Plan Setting -->
+                <div class="step" id="step-8" data-step="8" style="display: none;">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <span class="step-icon" data-lucide="clock"></span>
+                            <span class="number">8</span>
+                        </div>
+                        <h2>Timeline & Plan Setting</h2>
+                        <button class="info-btn" aria-label="Info for step 8" data-step="8">
+                            <span data-lucide="info"></span>
+                        </button>
+                    </div>
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label for="timeline" class="sr-only">Enter your timeline and plan details</label>
+                            <textarea 
+                                id="timeline" 
+                                name="timeline" 
+                                rows="3" 
+                                placeholder="e.g., Run for 4 weeks minimum. If no significance, consider running for 2 more weeks or redesigning the test"
+                                aria-describedby="timeline-help"
+                            ></textarea>
+                        </div>
+                        <button type="button" class="next-btn" disabled>Generate Summary</button>
+                    </div>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="summary-section" id="summary" style="display: none;">
+                    <div class="summary-header">
+                        <div class="completion-icon">
+                            <span data-lucide="flask-conical"></span>
+                        </div>
+                        <h2>AB Test Plan Complete</h2>
+                        <p>Your comprehensive test plan is ready to launch</p>
+                    </div>
+                    
+                    <div class="summary-content">
+                        <div class="summary-item">
+                            <h3>1. Problem/Opportunity Identification</h3>
+                            <p id="summary-problem"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>2. Solution Proposal</h3>
+                            <p id="summary-solution"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>3. Hypothesis Formation</h3>
+                            <p id="summary-hypothesis"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>4. Long-term Metric Selection</h3>
+                            <p id="summary-longterm"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>5. Proxy Metric Identification</h3>
+                            <p id="summary-proxy"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>6. Change Impact Assessment</h3>
+                            <p id="summary-impact"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>7. MDA Calculation</h3>
+                            <p id="summary-mda"></p>
+                        </div>
+                        <div class="summary-item">
+                            <h3>8. Timeline & Plan Setting</h3>
+                            <p id="summary-timeline"></p>
+                        </div>
+                    </div>
+
+                    <div class="launch-checklist">
+                        <h3>Ready to Launch Checklist</h3>
+                        <ul>
+                            <li>Confirm test variants are properly implemented</li>
+                            <li>Set up tracking for primary and proxy metrics</li>
+                            <li>Ensure statistical significance calculator is configured</li>
+                            <li>Establish monitoring schedule for test progress</li>
+                            <li>Prepare analysis plan for interpreting results</li>
+                        </ul>
+                    </div>
+
+                    <div class="export-actions">
+                        <button type="button" class="export-btn" id="copyMarkdown">
+                            <span data-lucide="copy"></span>
+                            Copy as Markdown
+                        </button>
+                        <button type="button" class="secondary-btn" id="startOver">
+                            <span data-lucide="refresh-cw"></span>
+                            Start New Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Step Information</h3>
+                <button class="modal-close" id="modal-close" aria-label="Close modal">
+                    <span data-lucide="x"></span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

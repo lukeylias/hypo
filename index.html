@@ -6,15 +6,15 @@
     <title>AB Test Setup Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
     <div class="container">
-        <header class="header">
+        <!-- <header class="header">
             <h1>AB Test Setup Guide</h1>
             <p class="subtitle">Create effective AB test plans with our 8-step progressive form</p>
-        </header>
+        </header> -->
 
         <main class="main">
             <div class="action-buttons-container">
@@ -49,11 +49,10 @@
                                 type="text" 
                                 id="problem" 
                                 name="problem" 
-                                placeholder="e.g., ContentSquare shows 70% of users abandon our checkout page at the payment step"
                                 aria-describedby="problem-help"
                             >
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Solution</button>
+                        <button type="button" class="next-btn">Continue to Solution</button>
                     </div>
                 </div>
 
@@ -76,11 +75,10 @@
                                 id="solution" 
                                 name="solution" 
                                 rows="3" 
-                                placeholder="e.g., Add trust badges and security icons above the payment form to reduce anxiety"
                                 aria-describedby="solution-help"
                             ></textarea>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Hypothesis</button>
+                        <button type="button" class="next-btn">Continue to Hypothesis</button>
                     </div>
                 </div>
 
@@ -103,12 +101,11 @@
                                 id="hypothesis" 
                                 name="hypothesis" 
                                 rows="3" 
-                                placeholder="e.g., I believe adding trust badges will increase payment completion by 15% BECAUSE users will feel more confident about security"
                                 aria-describedby="hypothesis-help"
                             ></textarea>
                             <p class="field-description" id="hypothesis-help">I believe [solution] will [outcome] BECAUSE [reasoning]</p>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Metrics</button>
+                        <button type="button" class="next-btn">Continue to Metrics</button>
                     </div>
                 </div>
 
@@ -129,17 +126,11 @@
                             <label for="longTermMetric">Select your primary long-term metric</label>
                             <select id="longTermMetric" name="longTermMetric" aria-describedby="longterm-help">
                                 <option value="">Choose a metric...</option>
-                                <option value="Join Completes">Join Completes</option>
-                                <option value="Conversion Rate">Conversion Rate</option>
-                                <option value="Revenue per Visitor">Revenue per Visitor</option>
-                                <option value="Customer Lifetime Value">Customer Lifetime Value</option>
-                                <option value="Retention Rate">Retention Rate</option>
-                                <option value="Subscription Signups">Subscription Signups</option>
-                                <option value="Purchase Completions">Purchase Completions</option>
-                                <option value="User Engagement Score">User Engagement Score</option>
+                                <option value="Join Complete">Join Complete</option>
+                                <option value="Increase Leads">Increase Leads</option>
                             </select>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Proxy Metric</button>
+                        <button type="button" class="next-btn">Continue to Proxy Metric</button>
                     </div>
                 </div>
 
@@ -150,7 +141,7 @@
                             <span class="step-icon" data-lucide="trending-up"></span>
                             <span class="number">5</span>
                         </div>
-                        <h2>Proxy Metric Identification</h2>
+                        <h2>Proxy (Primary) Metric Identification</h2>
                         <button class="info-btn" aria-label="Info for step 5" data-step="5">
                             <span data-lucide="info"></span>
                         </button>
@@ -160,18 +151,11 @@
                             <label for="proxyMetric">Select your proxy metric</label>
                             <select id="proxyMetric" name="proxyMetric" aria-describedby="proxy-help">
                                 <option value="">Choose a proxy metric...</option>
-                                <option value="Click-through Rate">Click-through Rate</option>
-                                <option value="Add to Cart Rate">Add to Cart Rate</option>
-                                <option value="Email Signups">Email Signups</option>
-                                <option value="Page Views per Session">Page Views per Session</option>
-                                <option value="Time on Page">Time on Page</option>
-                                <option value="Form Completion Rate">Form Completion Rate</option>
-                                <option value="Download Rate">Download Rate</option>
-                                <option value="Video Watch Time">Video Watch Time</option>
-                                <option value="Feature Usage Rate">Feature Usage Rate</option>
+                                <option value="Proxy Metric 1">Proxy Metric 1</option>
+                                <option value="Proxy Metric 2">Proxy Metric 2</option>
                             </select>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to Impact Assessment</button>
+                        <button type="button" class="next-btn">Continue to Impact Assessment</button>
                     </div>
                 </div>
 
@@ -191,29 +175,22 @@
                         <div class="form-group">
                             <div class="radio-group">
                                 <div class="radio-option">
-                                    <input type="radio" id="impact-minor" name="changeImpact" value="Minor">
-                                    <label for="impact-minor">
-                                        <strong>Minor</strong>
-                                        <span class="radio-description">small visual changes, copy tweaks</span>
+                                    <input type="radio" id="impact-small" name="changeImpact" value="Small">
+                                    <label for="impact-small">
+                                        <strong>Small</strong>
+                                        <span class="radio-description">minor changes, copy adjustments</span>
                                     </label>
                                 </div>
                                 <div class="radio-option">
-                                    <input type="radio" id="impact-moderate" name="changeImpact" value="Moderate">
-                                    <label for="impact-moderate">
-                                        <strong>Moderate</strong>
-                                        <span class="radio-description">layout changes, new content sections</span>
-                                    </label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="impact-major" name="changeImpact" value="Major">
-                                    <label for="impact-major">
-                                        <strong>Major</strong>
-                                        <span class="radio-description">complete redesign, new features</span>
+                                    <input type="radio" id="impact-large" name="changeImpact" value="Large">
+                                    <label for="impact-large">
+                                        <strong>Large</strong>
+                                        <span class="radio-description">major redesign, new features</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="next-btn" disabled>Continue to MDA Calculation</button>
+                        <button type="button" class="next-btn">Continue to Timeline Calculator</button>
                     </div>
                 </div>
 
@@ -224,7 +201,7 @@
                             <span class="step-icon" data-lucide="calculator"></span>
                             <span class="number">7</span>
                         </div>
-                        <h2>MDA Calculation</h2>
+                        <h2>Timeline Calculator</h2>
                         <button class="info-btn" aria-label="Info for step 7" data-step="7">
                             <span data-lucide="info"></span>
                         </button>
@@ -261,9 +238,9 @@
                         <!-- Calculator Input Section -->
                         <div class="calculator-inputs">
                             <div class="input-group">
-                                <label for="baselineRate">Baseline Conversion Rate</label>
+                                <label for="baselineRate" id="baselineRateLabel">Current conversion rate for your proxy metric</label>
                                 <div class="input-with-suffix">
-                                    <input type="number" id="baselineRate" step="0.01" min="0.1" max="99" placeholder="15.90" maxlength="5">
+                                    <input type="number" id="baselineRate" step="0.01" min="0.1" max="99" maxlength="5">
                                     <span class="input-suffix">%</span>
                                 </div>
                                 <div class="input-error" id="baselineRate-error"></div>
@@ -272,19 +249,10 @@
                             <div class="input-group">
                                 <label for="weeklyVisitors">Weekly Visitors</label>
                                 <div class="input-with-suffix">
-                                    <input type="number" id="weeklyVisitors" min="100" placeholder="1970" maxlength="6">
+                                    <input type="text" id="weeklyVisitors" inputmode="numeric">
                                     <span class="input-suffix">sessions</span>
                                 </div>
                                 <div class="input-error" id="weeklyVisitors-error"></div>
-                            </div>
-                            
-                            <div class="input-group">
-                                <label for="mde">Minimum Detectable Effect (MDE)</label>
-                                <div class="input-with-suffix">
-                                    <input type="number" id="mde" value="10" step="1" min="1" max="50" maxlength="2">
-                                    <span class="input-suffix">%</span>
-                                </div>
-                                <div class="input-error" id="mde-error"></div>
                             </div>
                             
                             <div class="input-group">
@@ -294,6 +262,15 @@
                                     <option value="95">95%</option>
                                     <option value="99">99%</option>
                                 </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="mde">What's the minimum percentage increase we care about?</label>
+                                <div class="input-with-suffix">
+                                    <input type="number" id="mde" value="5" step="0.1" min="0.1" max="50" maxlength="4">
+                                    <span class="input-suffix">%</span>
+                                </div>
+                                <div class="input-error" id="mde-error"></div>
                             </div>
                             
                             <div class="input-group">
@@ -330,7 +307,7 @@
                             </div>
                         </div>
                         
-                        <button type="button" class="calculate-btn" id="calculateBtn" disabled>
+                        <button type="button" class="calculate-btn" id="calculateBtn">
                             Calculate Timeline
                         </button>
                         
@@ -358,11 +335,10 @@
                                 id="timeline" 
                                 name="timeline" 
                                 rows="3" 
-                                placeholder="e.g., Run for 4 weeks minimum. If no significance, consider running for 2 more weeks or redesigning the test"
                                 aria-describedby="timeline-help"
                             ></textarea>
                         </div>
-                        <button type="button" class="next-btn" disabled>Generate Summary</button>
+                        <button type="button" class="next-btn">Generate Summary</button>
                     </div>
                 </div>
 
@@ -412,14 +388,8 @@
                     </div>
 
                     <div class="launch-checklist">
-                        <h3>Ready to Launch Checklist</h3>
-                        <ul>
-                            <li>Confirm test variants are properly implemented</li>
-                            <li>Set up tracking for primary and proxy metrics</li>
-                            <li>Ensure statistical significance calculator is configured</li>
-                            <li>Establish monitoring schedule for test progress</li>
-                            <li>Prepare analysis plan for interpreting results</li>
-                        </ul>
+                        <h3>Ready to Launch</h3>
+                        <p>Now you can copy this plan and paste it into our ideas board.</p>
                     </div>
 
                     <div class="export-actions">

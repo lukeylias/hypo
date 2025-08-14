@@ -51,10 +51,20 @@ class ABTestGuide {
             radio.addEventListener('change', () => this.handleInput('changeImpact'));
         });
 
-        // Calculator event listeners
-        document.getElementById('baselineRate').addEventListener('input', () => this.validateCalculatorInputs());
-        document.getElementById('weeklyVisitors').addEventListener('input', () => this.validateCalculatorInputs());
-        document.getElementById('mde').addEventListener('input', () => this.validateCalculatorInputs());
+        // Calculator event listeners - only validate on blur and change for better UX
+        document.getElementById('baselineRate').addEventListener('blur', () => this.validateCalculatorField('baselineRate'));
+        document.getElementById('baselineRate').addEventListener('input', () => {
+            this.clearFieldError('baselineRate');
+        });
+        document.getElementById('weeklyVisitors').addEventListener('blur', () => this.validateCalculatorField('weeklyVisitors'));
+        document.getElementById('weeklyVisitors').addEventListener('input', (e) => {
+            this.clearFieldError('weeklyVisitors');
+            this.formatNumberWithCommas(e.target);
+        });
+        document.getElementById('mde').addEventListener('blur', () => this.validateCalculatorField('mde'));
+        document.getElementById('mde').addEventListener('input', () => {
+            this.clearFieldError('mde');
+        });
         document.getElementById('significance').addEventListener('change', () => this.validateCalculatorInputs());
         document.querySelectorAll('input[name="variations"]').forEach(radio => {
             radio.addEventListener('change', () => this.validateCalculatorInputs());
@@ -119,50 +129,33 @@ class ABTestGuide {
             this.formData[fieldName] = element.value;
             this.saveToStorage();
             this.validateCurrentStep();
+            
+            // Clear any validation errors for this field
+            this.clearFieldValidationError(fieldName);
+        }
+    }
+
+    clearFieldValidationError(fieldName) {
+        const errorElement = document.getElementById(`${fieldName}-error`);
+        if (errorElement && errorElement.classList.contains('field-validation-error')) {
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
         }
     }
 
 
     validateCurrentStep() {
-        const currentStepElement = document.querySelector(`#step-${this.currentStep}`);
-        const nextBtn = currentStepElement.querySelector('.next-btn');
-        
-        let isValid = false;
-        
-        switch(this.currentStep) {
-            case 1:
-                isValid = this.formData.problem.trim().length > 0;
-                break;
-            case 2:
-                isValid = this.formData.solution.trim().length > 0;
-                break;
-            case 3:
-                isValid = this.formData.hypothesis.trim().length > 0;
-                break;
-            case 4:
-                isValid = this.formData.longTermMetric.length > 0;
-                break;
-            case 5:
-                isValid = this.formData.proxyMetric.length > 0;
-                break;
-            case 6:
-                isValid = this.formData.changeImpact.length > 0;
-                break;
-            case 7:
-                // For Step 7, check if calculator has been completed (button shows success)
-                const calculateBtn = document.getElementById('calculateBtn');
-                isValid = calculateBtn && calculateBtn.classList.contains('success');
-                break;
-            case 8:
-                isValid = this.formData.timeline.trim().length > 0;
-                break;
-        }
-        
-        nextBtn.disabled = !isValid;
+        // Remove disabled state validation - buttons are always enabled now
+        // Validation will happen when buttons are clicked
     }
 
     nextStep(event) {
         const stepNumber = parseInt(event.target.closest('.step').dataset.step);
+        
+        // Validate current step before proceeding
+        if (!this.validateStepData(stepNumber)) {
+            return; // Don't proceed if validation fails
+        }
         
         if (stepNumber === this.maxStep) {
             this.showSummary();
@@ -173,6 +166,121 @@ class ABTestGuide {
         }
         
         this.saveToStorage();
+    }
+
+    validateStepData(stepNumber) {
+        let isValid = true;
+        
+        // Clear any existing step validation errors
+        this.clearStepValidationErrors(stepNumber);
+        
+        switch(stepNumber) {
+            case 1:
+                if (!this.formData.problem || this.formData.problem.trim().length === 0) {
+                    this.showFieldError('problem', 'Please describe the problem or opportunity before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 2:
+                if (!this.formData.solution || this.formData.solution.trim().length === 0) {
+                    this.showFieldError('solution', 'Please describe your proposed solution before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 3:
+                if (!this.formData.hypothesis || this.formData.hypothesis.trim().length === 0) {
+                    this.showFieldError('hypothesis', 'Please write your hypothesis before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 4:
+                if (!this.formData.longTermMetric || this.formData.longTermMetric.length === 0) {
+                    this.showFieldError('longTermMetric', 'Please select a long-term metric before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 5:
+                if (!this.formData.proxyMetric || this.formData.proxyMetric.length === 0) {
+                    this.showFieldError('proxyMetric', 'Please select a proxy metric before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 6:
+                if (!this.formData.changeImpact || this.formData.changeImpact.length === 0) {
+                    this.showStepError(stepNumber, 'Please select the change impact before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 7:
+                // For Step 7, check if calculator has been completed
+                const calculateBtn = document.getElementById('calculateBtn');
+                if (!calculateBtn || !calculateBtn.classList.contains('success')) {
+                    this.showStepError(stepNumber, 'Please complete the timeline calculation before continuing.');
+                    isValid = false;
+                }
+                break;
+            case 8:
+                if (!this.formData.timeline || this.formData.timeline.trim().length === 0) {
+                    this.showFieldError('timeline', 'Please enter your timeline and plan details before generating the summary.');
+                    isValid = false;
+                }
+                break;
+        }
+        
+        return isValid;
+    }
+
+    showFieldError(fieldName, message) {
+        // Try to find an existing error element for this field
+        let errorElement = document.getElementById(`${fieldName}-error`);
+        
+        // If no error element exists, create one
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.id = `${fieldName}-error`;
+            errorElement.className = 'field-validation-error';
+            
+            // Find the field and insert error after it
+            const field = document.getElementById(fieldName);
+            if (field) {
+                field.parentNode.insertBefore(errorElement, field.nextSibling);
+            }
+        }
+        
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+
+    showStepError(stepNumber, message) {
+        // Create a general step error that appears at the bottom of the step
+        let errorElement = document.getElementById(`step-${stepNumber}-error`);
+        
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.id = `step-${stepNumber}-error`;
+            errorElement.className = 'step-validation-error';
+            
+            // Find the step content and append error
+            const stepContent = document.querySelector(`#step-${stepNumber} .step-content`);
+            if (stepContent) {
+                stepContent.appendChild(errorElement);
+            }
+        }
+        
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+
+    clearStepValidationErrors(stepNumber) {
+        // Clear field-specific errors in this step
+        const stepElement = document.getElementById(`step-${stepNumber}`);
+        if (stepElement) {
+            const errorElements = stepElement.querySelectorAll('.field-validation-error, .step-validation-error');
+            errorElements.forEach(error => {
+                error.style.display = 'none';
+                error.textContent = '';
+            });
+        }
     }
 
 
@@ -279,7 +387,35 @@ class ABTestGuide {
         document.getElementById('summary-longterm').textContent = this.formData.longTermMetric;
         document.getElementById('summary-proxy').textContent = this.formData.proxyMetric;
         document.getElementById('summary-impact').textContent = this.formData.changeImpact;
-        document.getElementById('summary-mda').textContent = this.formData.mdaCalculation;
+        
+        // Format MDA calculation as a readable list
+        if (this.formData.mdaCalculation) {
+            const mdaText = this.formData.mdaCalculation;
+            
+            // Extract key information from the MDA calculation text
+            const durationMatch = mdaText.match(/(\d+) weeks minimum/);
+            const baselineMatch = mdaText.match(/(\d+\.?\d*)% baseline conversion rate/);
+            const visitorsMatch = mdaText.match(/([\d,]+) weekly visitors/);
+            const mdeMatch = mdaText.match(/(\d+(?:\.\d+)?) percentage point improvement/);
+            const confidenceMatch = mdaText.match(/(\d+)% confidence/);
+            
+            const duration = durationMatch ? durationMatch[1] : 'N/A';
+            const baseline = baselineMatch ? baselineMatch[1] : 'N/A';
+            const visitors = visitorsMatch ? visitorsMatch[1] : 'N/A';
+            const mde = mdeMatch ? mdeMatch[1] : 'N/A';
+            const confidence = confidenceMatch ? confidenceMatch[1] : 'N/A';
+            
+            document.getElementById('summary-mda').innerHTML = `
+                • <strong>Duration:</strong> ${duration} weeks minimum<br>
+                • <strong>Baseline Rate:</strong> ${baseline}%<br>
+                • <strong>Weekly Traffic:</strong> ${visitors} visitors<br>
+                • <strong>Effect Size:</strong> ${mde} percentage point target<br>
+                • <strong>Confidence Level:</strong> ${confidence}%
+            `;
+        } else {
+            document.getElementById('summary-mda').textContent = this.formData.mdaCalculation;
+        }
+        
         document.getElementById('summary-timeline').textContent = this.formData.timeline;
     }
 
@@ -427,7 +563,7 @@ _Generated by AB Test Setup Guide_`;
             const significanceField = document.getElementById('significance');
             const variationsRadio = document.getElementById('variations-2');
             
-            if (mdeField) mdeField.value = '10';
+            if (mdeField) mdeField.value = '5';
             if (significanceField) significanceField.value = '90';
             if (variationsRadio) variationsRadio.checked = true;
             
@@ -436,7 +572,6 @@ _Generated by AB Test Setup Guide_`;
             if (calculateBtn) {
                 calculateBtn.className = 'calculate-btn';
                 calculateBtn.innerHTML = 'Calculate Timeline';
-                calculateBtn.disabled = true;
                 calculateBtn.onclick = () => this.calculateTimeline();
             }
             
@@ -578,35 +713,53 @@ _Generated by AB Test Setup Guide_`;
                 title: 'Change Impact Assessment',
                 content: `
                     <h4>Purpose</h4>
-                    <p>Assess the scope and impact of your proposed changes to determine the expected effect size and testing requirements.</p>
+                    <p>Assess the scope and impact of your proposed changes to determine development effort, measurement complexity, and expected effect size.</p>
                     
                     <h4>Impact levels:</h4>
                     <ul>
-                        <li><strong>Minor:</strong> Small copy changes, color adjustments, minor UI tweaks</li>
-                        <li><strong>Moderate:</strong> Layout changes, new content sections, feature modifications</li>
-                        <li><strong>Major:</strong> Complete redesigns, new features, fundamental UX changes</li>
+                        <li><strong>Small:</strong> Copy changes, color adjustments, minor UI tweaks, layout modifications</li>
+                        <li><strong>Large:</strong> Complete redesigns, new features, fundamental UX changes, major content overhauls</li>
                     </ul>
                     
                     <h4>Why this matters:</h4>
-                    <p>Larger changes typically have bigger effects but may require longer test durations and larger sample sizes to detect significance.</p>
+                    <p><strong>Large changes:</strong></p>
+                    <ul>
+                        <li>Faster data collection - Big effects are easier to detect statistically</li>
+                        <li>Longer development time - More complex to build and implement</li>
+                        <li>Harder to isolate learnings - Multiple variables changing makes it difficult to identify what specifically drove results</li>
+                    </ul>
+                    
+                    <p><strong>Small changes:</strong></p>
+                    <ul>
+                        <li>Faster to build - Quick implementation and deployment</li>
+                        <li>Clear learnings - Easy to identify exactly what caused the effect</li>
+                        <li>Slower data collection - Small effects require larger sample sizes and longer test durations to reach significance</li>
+                    </ul>
+                    
+                    <p><strong>Trade-off consideration:</strong> Choose based on your timeline constraints, development resources, and learning objectives.</p>
                 `
             },
             '7': {
                 title: 'MDA Calculation',
                 content: `
                     <h4>Purpose</h4>
-                    <p>Determine your Minimum Detectable Audience (MDA) - the sample size needed to detect a meaningful difference between variants.</p>
+                    <p>Calculate how long your experiment needs to run to detect meaningful changes with statistical confidence.</p>
                     
-                    <h4>Key factors:</h4>
+                    <h4>What you'll determine:</h4>
                     <ul>
-                        <li>Current conversion rate</li>
-                        <li>Minimum effect size you want to detect</li>
-                        <li>Desired statistical confidence level (typically 95%)</li>
-                        <li>Statistical power (typically 80%)</li>
+                        <li><strong>Baseline conversion rate</strong> - Current performance of your proxy metric</li>
+                        <li><strong>Weekly traffic volume</strong> - How many visitors reach your test area</li>
+                        <li><strong>Minimum effect size</strong> - Smallest improvement worth detecting (typically 10%)</li>
+                        <li><strong>Timeline needed</strong> - Weeks required to reach statistical significance</li>
                     </ul>
                     
-                    <h4>Tools:</h4>
-                    <p>Use online calculators like Optimizely's sample size calculator or Evan Miller's AB test calculator to determine your MDA.</p>
+                    <h4>Why this matters:</h4>
+                    <p>Understanding your timeline upfront helps with:</p>
+                    <ul>
+                        <li>Resource planning and expectations</li>
+                        <li>Deciding if the test is worth running</li>
+                        <li>Choosing between testing approaches (small vs large changes)</li>
+                    </ul>
                 `
             },
             '8': {
@@ -659,6 +812,16 @@ _Generated by AB Test Setup Guide_`;
         placeholders.forEach(placeholder => {
             placeholder.textContent = mappedMetric;
         });
+        
+        // Update baseline rate label
+        const baselineRateLabel = document.getElementById('baselineRateLabel');
+        if (baselineRateLabel) {
+            if (this.formData.proxyMetric) {
+                baselineRateLabel.innerHTML = `Current conversion rate for <strong>${this.formData.proxyMetric}</strong>`;
+            } else {
+                baselineRateLabel.textContent = 'Current conversion rate for your proxy metric';
+            }
+        }
     }
 
     async copyPrompt(event) {
@@ -758,38 +921,124 @@ _Generated by AB Test Setup Guide_`;
         }, 2000);
     }
 
+    clearFieldError(fieldName) {
+        document.getElementById(`${fieldName}-error`).textContent = '';
+    }
+
+    validateCalculatorField(fieldName) {
+        const field = document.getElementById(fieldName);
+        // Remove commas for parsing numbers
+        const rawValue = field.value.replace(/,/g, '');
+        const value = fieldName === 'weeklyVisitors' ? parseInt(rawValue) : parseFloat(rawValue);
+        const errorElement = document.getElementById(`${fieldName}-error`);
+        
+        let isValid = true;
+        
+        // Clear previous error
+        errorElement.textContent = '';
+        
+        // Show error for empty fields on blur
+        if (field.value.trim() === '') {
+            switch(fieldName) {
+                case 'baselineRate':
+                    errorElement.textContent = 'Baseline rate is required';
+                    break;
+                case 'weeklyVisitors':
+                    errorElement.textContent = 'Weekly visitors is required';
+                    break;
+                case 'mde':
+                    errorElement.textContent = 'MDE is required';
+                    break;
+            }
+            isValid = false;
+        } else {
+            // Validate field values
+            switch(fieldName) {
+                case 'baselineRate':
+                    if (!value || value < 0.1 || value > 99) {
+                        errorElement.textContent = 'Baseline rate must be between 0.1% and 99%';
+                        isValid = false;
+                    }
+                    break;
+                case 'weeklyVisitors':
+                    if (!value || value < 100) {
+                        errorElement.textContent = 'Weekly visitors must be at least 100 for reliable results';
+                        isValid = false;
+                    }
+                    break;
+                case 'mde':
+                    if (!value || value < 1 || value > 50) {
+                        errorElement.textContent = 'MDE should be between 1% and 50% for practical testing';
+                        isValid = false;
+                    }
+                    break;
+            }
+        }
+        
+        
+        return isValid;
+    }
+
     validateCalculatorInputs() {
         const baselineRate = parseFloat(document.getElementById('baselineRate').value);
-        const weeklyVisitors = parseInt(document.getElementById('weeklyVisitors').value);
+        const weeklyVisitors = parseInt(document.getElementById('weeklyVisitors').value.replace(/,/g, ''));
         const mde = parseFloat(document.getElementById('mde').value);
         
         let isValid = true;
         
-        // Clear previous errors
-        document.querySelectorAll('.input-error').forEach(error => error.textContent = '');
-        
-        // Validate baseline rate
+        // Validate all fields when calculate is clicked
         if (!baselineRate || baselineRate < 0.1 || baselineRate > 99) {
-            document.getElementById('baselineRate-error').textContent = 'Baseline rate must be between 0.1% and 99%';
+            document.getElementById('baselineRate-error').textContent = baselineRate ? 'Baseline rate must be between 0.1% and 99%' : 'Baseline rate is required';
             isValid = false;
         }
         
-        // Validate weekly visitors
         if (!weeklyVisitors || weeklyVisitors < 100) {
-            document.getElementById('weeklyVisitors-error').textContent = 'Weekly visitors must be at least 100 for reliable results';
+            document.getElementById('weeklyVisitors-error').textContent = weeklyVisitors ? 'Weekly visitors must be at least 100 for reliable results' : 'Weekly visitors is required';
             isValid = false;
         }
         
-        // Validate MDE
         if (!mde || mde < 1 || mde > 50) {
-            document.getElementById('mde-error').textContent = 'MDE should be between 1% and 50% for practical testing';
+            document.getElementById('mde-error').textContent = mde ? 'MDE should be between 1% and 50% for practical testing' : 'MDE is required';
             isValid = false;
         }
-        
-        // Enable/disable calculate button
-        document.getElementById('calculateBtn').disabled = !isValid;
         
         return isValid;
+    }
+
+    updateCalculateButtonState() {
+        // Remove disabled state logic - button is always enabled
+        // Validation will happen when button is clicked
+    }
+
+
+    formatNumberWithCommas(inputElement) {
+        // Get the current cursor position
+        const cursorPosition = inputElement.selectionStart;
+        
+        // Remove any non-numeric characters except commas
+        let rawValue = inputElement.value.replace(/[^\d,]/g, '');
+        
+        // Remove any existing commas to get the pure number
+        rawValue = rawValue.replace(/,/g, '');
+        
+        // Only format if it's a valid number and not empty
+        if (rawValue && !isNaN(rawValue) && rawValue !== '') {
+            // Format with commas
+            const formattedValue = parseInt(rawValue).toLocaleString();
+            
+            // Calculate the new cursor position (accounting for added commas)
+            const commasAdded = formattedValue.split(',').length - inputElement.value.split(',').length;
+            const newCursorPosition = cursorPosition + commasAdded;
+            
+            // Update the value
+            inputElement.value = formattedValue;
+            
+            // Restore cursor position
+            inputElement.setSelectionRange(newCursorPosition, newCursorPosition);
+        } else if (rawValue === '') {
+            // Clear the field if no valid number
+            inputElement.value = '';
+        }
     }
 
     getZValue(confidenceLevel) {
@@ -802,9 +1051,11 @@ _Generated by AB Test Setup Guide_`;
         return zValues[confidenceLevel] || 1.96;
     }
 
-    calculateSampleSize(baseline, mde, significance, power = 80) {
+    calculateSampleSize(baseline, mdePoints, significance, power = 80) {
         const p1 = baseline / 100;
-        const p2 = p1 * (1 + mde / 100);
+        // Convert percentage points to relative percentage for statistical calculation
+        const mdeRelative = (mdePoints / baseline) * 100;
+        const p2 = p1 * (1 + mdeRelative / 100);
         
         const zAlpha = this.getZValue(significance);
         const zBeta = this.getZValue(power);
@@ -826,7 +1077,7 @@ _Generated by AB Test Setup Guide_`;
         }
         
         const baselineRate = parseFloat(document.getElementById('baselineRate').value);
-        const weeklyVisitors = parseInt(document.getElementById('weeklyVisitors').value);
+        const weeklyVisitors = parseInt(document.getElementById('weeklyVisitors').value.replace(/,/g, ''));
         const mde = parseFloat(document.getElementById('mde').value);
         const significance = parseInt(document.getElementById('significance').value);
         const variations = parseInt(document.querySelector('input[name="variations"]:checked').value);
@@ -838,7 +1089,7 @@ _Generated by AB Test Setup Guide_`;
         calculateBtn.disabled = true;
         
         setTimeout(() => {
-            // Perform calculations
+            // Perform calculations - mde is now in percentage points
             const sampleSize = this.calculateSampleSize(baselineRate, mde, significance);
             const weeksNeeded = this.calculateWeeksNeeded(sampleSize, weeklyVisitors, variations);
             
@@ -855,10 +1106,10 @@ _Generated by AB Test Setup Guide_`;
             const resultSummary = document.getElementById('resultSummary');
             
             resultSummary.innerHTML = `
-                <strong>${weeksNeeded} weeks needed</strong><br>
-                Sample size: ${sampleSize.toLocaleString()} visitors per variant<br>
-                With ${weeklyVisitors.toLocaleString()} weekly visitors across ${variations} variations<br>
-                To detect ${mde}% lift with ${significance}% confidence
+                <span class="weeks-needed"><strong>${weeksNeeded} weeks needed</strong></span><br>
+                Sample size: <strong>${sampleSize.toLocaleString()}</strong> visitors per variant<br>
+                With <strong>${weeklyVisitors.toLocaleString()}</strong> weekly visitors across <strong>${variations}</strong> variations<br>
+                To detect <strong>${mde}%</strong> lift with <strong>${significance}%</strong> confidence
             `;
             
             resultDiv.style.display = 'block';
@@ -877,7 +1128,7 @@ _Generated by AB Test Setup Guide_`;
             const proxyMetric = this.formData.proxyMetric || 'your proxy metric';
             const timelineText = `Experiment Duration: ${weeksNeeded} weeks minimum
 
-Based on your proxy metric (${proxyMetric}) with ${baselineRate}% baseline conversion rate and ${weeklyVisitors.toLocaleString()} weekly visitors, you need ${weeksNeeded} weeks to detect a ${mde}% lift with ${significance}% confidence.
+Based on your proxy metric (${proxyMetric}) with ${baselineRate}% baseline conversion rate and ${weeklyVisitors.toLocaleString()} weekly visitors, you need ${weeksNeeded} weeks to detect a ${mde} percentage point improvement with ${significance}% confidence.
 
 Recommended Plan:
 • Week 1-${weeksNeeded}: Run experiment

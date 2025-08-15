@@ -1084,3 +1084,130 @@ select:focus,
     background: rgba(0, 0, 0, 0.8);
   }
 }
+
+/* Enhanced Results Display */
+.sample-size-section h4 {
+    margin: 0 0 8px 0;
+    color: #2d3748;
+}
+
+.assumptions-text {
+    font-size: 0.9em;
+    color: #718096;
+    font-style: italic;
+}
+
+.timeline-section {
+    line-height: 1.6;
+}
+
+.advanced-options {
+    margin-top: 16px;
+    padding: 12px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.advanced-options summary {
+    font-weight: 600;
+    color: #4a5568;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.advanced-options summary:hover {
+    color: #2d3748;
+}
+
+.advanced-content {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.9em;
+    color: #718096;
+    line-height: 1.5;
+}
+
+/* Two-button approach styling */
+.calculator-button-section {
+    margin: 32px 0;
+    text-align: center;
+}
+
+.calculator-button-section .calculate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 32px;
+    font-size: 1.1em;
+    font-weight: 600;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.15);
+}
+
+.calculator-button-section .calculate-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+}
+
+.calculator-button-section .calculate-btn:active {
+    transform: translateY(0);
+}
+
+.calculator-button-section .calculate-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.calculator-button-section .calculate-btn.success {
+    background: #10b981;
+    color: white;
+}
+
+.calculator-button-section .calculate-btn.success:hover {
+    background: #059669;
+}
+
+.calculator-button-section .calculate-btn.needs-recalculation {
+    background: #f59e0b;
+    color: white;
+    animation: pulse 2s ease-in-out infinite alternate;
+}
+
+.calculator-button-section .calculate-btn.needs-recalculation:hover {
+    background: #d97706;
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 4px 6px rgba(245, 158, 11, 0.15);
+    }
+    to {
+        box-shadow: 0 6px 12px rgba(245, 158, 11, 0.25);
+    }
+}
+
+.step-navigation {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+
+.calculator-result {
+    margin: 32px 0;
+    padding: 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}

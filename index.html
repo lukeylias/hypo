@@ -300,6 +300,15 @@
                             </div>
                         </div>
                         
+                        <!-- Standalone Calculate Timeline Button -->
+                        <div class="calculator-button-section">
+                            <button type="button" class="calculate-btn" id="calculateBtn">
+                                <span data-lucide="calculator"></span>
+                                Calculate Timeline
+                            </button>
+                        </div>
+                        
+                        <!-- Results Section (hidden until calculation) -->
                         <div class="calculator-result" id="calculatorResult" style="display: none;">
                             <div class="result-summary">
                                 <h4>Calculation Results</h4>
@@ -307,9 +316,13 @@
                             </div>
                         </div>
                         
-                        <button type="button" class="calculate-btn" id="calculateBtn">
-                            Calculate Timeline
-                        </button>
+                        <!-- Always-visible Continue Button -->
+                        <div class="step-navigation">
+                            <button type="button" class="next-btn" id="continueBtn">
+                                Continue to Next Step
+                                <span data-lucide="arrow-right"></span>
+                            </button>
+                        </div>
                         
                         <!-- Hidden field to maintain compatibility -->
                         <input type="hidden" id="mdaCalculation" name="mdaCalculation">

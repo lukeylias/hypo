@@ -52,7 +52,6 @@ body {
 .reset-btn:hover {
   background: #ef4444;
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
 .reset-btn:focus {
@@ -79,7 +78,6 @@ body {
 .share-btn:hover {
   background: #3b82f6;
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
 .share-btn:focus {
@@ -324,7 +322,6 @@ select {
 
 .example-btn:hover {
   background: #e5e7eb;
-  transform: translateY(-1px);
 }
 
 .example-btn:focus {
@@ -406,7 +403,6 @@ select {
 .export-btn:hover,
 .secondary-btn:hover {
   background: #374151;
-  transform: translateY(-1px);
 }
 
 .next-btn:focus,
@@ -432,7 +428,6 @@ select {
 .secondary-btn:hover {
   background: #f9fafb;
   border-color: #d1d5db;
-  transform: translateY(-1px);
 }
 
 /* Summary section */
@@ -608,7 +603,7 @@ select {
   .next-btn:hover:not(:disabled),
   .export-btn:hover,
   .secondary-btn:hover {
-    transform: translateY(-1px) scale(1.02);
+    /* Simple hover effect */
   }
 }
 
@@ -792,7 +787,6 @@ select {
 
 .copy-prompt-btn:hover {
   background: #2563eb;
-  transform: translateY(-1px);
 }
 
 .copy-prompt-btn:focus {
@@ -1018,7 +1012,6 @@ select:focus,
 
 .calculate-btn:hover:not(:disabled) {
   background: #374151;
-  transform: translateY(-1px);
 }
 
 .calculate-btn:focus {
@@ -1153,12 +1146,11 @@ select:focus,
 
 .calculator-button-section .calculate-btn:hover {
     background: #2563eb;
-    transform: translateY(-1px);
     box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
 }
 
 .calculator-button-section .calculate-btn:active {
-    transform: translateY(0);
+    background: #1d4ed8;
 }
 
 .calculator-button-section .calculate-btn:disabled {
@@ -1210,4 +1202,10 @@ select:focus,
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
+}
+
+.assumptions-note {
+    font-size: 0.9em;
+    color: #718096;
+    text-align: center;
 }
